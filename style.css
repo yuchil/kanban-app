@@ -1,0 +1,571 @@
+:root {
+  /* 暖色調極簡色彩系統 */
+  --bg-page: #FAF6F0;
+  --bg-card: #FFFDF9;
+  --bg-column: #F6F0E6;
+  --bg-column-dragover: #EFE5D6;
+  --bg-input: #FBF8F3;
+  --bg-hover: #F7F1E8;
+  --border-warm: #EBE3D5;
+  --border-card: #E6DDD0;
+  --border-focus: #D97757;
+
+  --text-primary: #2C221E;
+  --text-secondary: #7D6E63;
+  --text-muted: #B0A195;
+
+  --accent-primary: #D97757;
+  --accent-hover: #C46344;
+  --accent-soft: rgba(217, 119, 87, 0.14);
+
+  /* 欄位狀態指示色 */
+  --dot-todo: #C89D7C;
+  --dot-process: #D97757;
+  --dot-done: #84A98C;
+
+  /* 分類與負責人標籤色 */
+  --tag-work-bg: #FDECC8;
+  --tag-work-text: #9A5B13;
+  --tag-life-bg: #FADEC9;
+  --tag-life-text: #9F441E;
+  --tag-assignee-bg: #F3ECE3;
+  --tag-assignee-text: #5C4D42;
+
+  /* 優先程度 (Priority) 暖色調標籤與卡片側邊飾條 */
+  --prio-high-bg: #FBE4DF;
+  --prio-high-text: #B93822;
+  --prio-high-border: #D9604B;
+
+  --prio-medium-bg: #FDECC8;
+  --prio-medium-text: #9A5B13;
+  --prio-medium-border: #E09F5A;
+
+  --prio-low-bg: #EAE4DC;
+  --prio-low-text: #6E6055;
+  --prio-low-border: #C5B8AC;
+
+  --danger-hover-bg: #FDE8E4;
+  --danger-text: #C94A38;
+
+  --shadow-container: 0 14px 36px -10px rgba(74, 53, 37, 0.07),
+                      0 2px 6px -1px rgba(74, 53, 37, 0.04);
+  --shadow-card: 0 2px 6px rgba(74, 53, 37, 0.05);
+  --shadow-card-hover: 0 6px 14px rgba(74, 53, 37, 0.1);
+  --radius-xl: 22px;
+  --radius-lg: 16px;
+  --radius-md: 12px;
+  --radius-sm: 8px;
+  --transition: 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang TC",
+    "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+  background-color: var(--bg-page);
+  color: var(--text-primary);
+  line-height: 1.5;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 36px 20px;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* 主容器 */
+.app-container {
+  width: 100%;
+  max-width: 1140px;
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-warm);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-container);
+  padding: 32px;
+}
+
+/* 頁首區 */
+.app-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 24px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--border-warm);
+}
+
+.today-date {
+  font-size: 0.825rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  letter-spacing: 0.03em;
+  margin-bottom: 4px;
+}
+
+.app-header h1 {
+  font-size: 1.65rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+}
+
+.task-summary {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  background-color: var(--bg-hover);
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-weight: 500;
+}
+
+.task-summary span {
+  color: var(--accent-primary);
+  font-weight: 700;
+}
+
+/* 表單區 */
+.todo-form {
+  margin-bottom: 20px;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 175px 110px 155px auto;
+  gap: 10px;
+}
+
+.todo-input,
+.todo-assignee,
+.todo-category,
+.todo-priority {
+  width: 100%;
+  font-family: inherit;
+  font-size: 0.94rem;
+  color: var(--text-primary);
+  background-color: var(--bg-input);
+  border: 1px solid var(--border-warm);
+  border-radius: var(--radius-md);
+  padding: 12px 14px;
+  outline: none;
+  transition: border-color var(--transition), box-shadow var(--transition),
+    background-color var(--transition);
+}
+
+.todo-input::placeholder,
+.todo-assignee::placeholder {
+  color: var(--text-muted);
+}
+
+.todo-input:focus,
+.todo-assignee:focus,
+.todo-category:focus,
+.todo-priority:focus {
+  background-color: #FFFFFF;
+  border-color: var(--border-focus);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+.todo-category,
+.todo-priority {
+  cursor: pointer;
+}
+
+.btn-add {
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #FFFDF9;
+  background-color: var(--accent-primary);
+  border: none;
+  border-radius: var(--radius-md);
+  padding: 0 22px;
+  cursor: pointer;
+  transition: background-color var(--transition), transform 0.1s ease;
+  white-space: nowrap;
+}
+
+.btn-add:hover {
+  background-color: var(--accent-hover);
+}
+
+.btn-add:active {
+  transform: scale(0.98);
+}
+
+/* 篩選與操作列 */
+.controls-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 22px;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.filter-tabs {
+  display: inline-flex;
+  background-color: var(--bg-input);
+  padding: 4px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-warm);
+  gap: 4px;
+}
+
+.filter-tab {
+  font-family: inherit;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 6px 14px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all var(--transition);
+}
+
+.filter-tab:hover {
+  color: var(--text-primary);
+}
+
+.filter-tab.active {
+  background-color: var(--bg-card);
+  color: var(--text-primary);
+  font-weight: 600;
+  box-shadow: 0 1px 3px rgba(74, 53, 37, 0.08);
+}
+
+.tab-count {
+  font-size: 0.75rem;
+  background-color: var(--bg-hover);
+  color: var(--text-secondary);
+  padding: 1px 7px;
+  border-radius: 999px;
+}
+
+.filter-tab.active .tab-count {
+  background-color: var(--accent-soft);
+  color: var(--accent-primary);
+}
+
+.controls-right {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.drag-hint {
+  font-size: 0.825rem;
+  color: var(--text-secondary);
+}
+
+.btn-clear {
+  font-family: inherit;
+  font-size: 0.825rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  background: var(--bg-input);
+  border: 1px solid var(--border-warm);
+  cursor: pointer;
+  padding: 6px 12px;
+  border-radius: var(--radius-sm);
+  transition: all var(--transition);
+}
+
+.btn-clear:hover {
+  color: var(--danger-text);
+  background-color: var(--danger-hover-bg);
+  border-color: #F5C5BC;
+}
+
+/* 三欄看板區 (Kanban Board) */
+.kanban-board {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  align-items: stretch;
+}
+
+.kanban-column {
+  background-color: var(--bg-column);
+  border: 1px solid var(--border-warm);
+  border-radius: var(--radius-lg);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  min-height: 420px;
+  transition: background-color var(--transition), border-color var(--transition),
+    box-shadow var(--transition);
+}
+
+.kanban-column.drag-over {
+  background-color: var(--bg-column-dragover);
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+.column-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+  padding: 2px 4px 12px;
+  border-bottom: 1px solid rgba(125, 110, 99, 0.14);
+}
+
+.column-title-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.status-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.dot-todo {
+  background-color: var(--dot-todo);
+}
+
+.dot-process {
+  background-color: var(--dot-process);
+}
+
+.dot-done {
+  background-color: var(--dot-done);
+}
+
+.column-title {
+  font-size: 1.02rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: 0.01em;
+}
+
+.column-count {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-warm);
+  padding: 2px 9px;
+  border-radius: 999px;
+}
+
+/* 拖放容器 */
+.column-dropzone {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-height: 320px;
+  border-radius: var(--radius-md);
+}
+
+/* 任務卡片 */
+.task-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-card);
+  border-left: 4px solid var(--prio-medium-border);
+  border-radius: var(--radius-md);
+  padding: 14px 15px;
+  box-shadow: var(--shadow-card);
+  cursor: grab;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: transform var(--transition), box-shadow var(--transition),
+    border-color var(--transition), opacity var(--transition);
+  user-select: none;
+}
+
+.task-card[data-priority="high"] {
+  border-left-color: var(--prio-high-border);
+}
+
+.task-card[data-priority="medium"] {
+  border-left-color: var(--prio-medium-border);
+}
+
+.task-card[data-priority="low"] {
+  border-left-color: var(--prio-low-border);
+}
+
+.task-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-card-hover);
+  border-top-color: #D7C7B5;
+  border-right-color: #D7C7B5;
+  border-bottom-color: #D7C7B5;
+}
+
+.task-card:active {
+  cursor: grabbing;
+}
+
+.task-card.dragging {
+  opacity: 0.45;
+  transform: scale(0.98);
+  border: 1px dashed var(--accent-primary);
+}
+
+.card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.task-text {
+  font-size: 0.96rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  word-break: break-word;
+  flex: 1;
+}
+
+/* Done 欄位中的卡片樣式 */
+.kanban-column[data-status="done"] .task-card {
+  background-color: #FCF9F4;
+}
+
+.kanban-column[data-status="done"] .task-text {
+  text-decoration: line-through;
+  color: var(--text-muted);
+}
+
+.kanban-column[data-status="done"] .badge {
+  opacity: 0.72;
+}
+
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.card-badges {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.74rem;
+  font-weight: 600;
+  padding: 3px 9px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+.badge-priority-high {
+  background-color: var(--prio-high-bg);
+  color: var(--prio-high-text);
+}
+
+.badge-priority-medium {
+  background-color: var(--prio-medium-bg);
+  color: var(--prio-medium-text);
+}
+
+.badge-priority-low {
+  background-color: var(--prio-low-bg);
+  color: var(--prio-low-text);
+}
+
+.badge-assignee {
+  background-color: var(--tag-assignee-bg);
+  color: var(--tag-assignee-text);
+  font-weight: 500;
+}
+
+.badge-work {
+  background-color: var(--tag-work-bg);
+  color: var(--tag-work-text);
+}
+
+.badge-life {
+  background-color: var(--tag-life-bg);
+  color: var(--tag-life-text);
+}
+
+.btn-delete {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: color var(--transition), background-color var(--transition);
+}
+
+.btn-delete:hover {
+  color: var(--danger-text);
+  background-color: var(--danger-hover-bg);
+}
+
+/* 欄位空狀態 */
+.column-empty {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 32px 12px;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  border: 1.5px dashed #E2D8C9;
+  border-radius: var(--radius-md);
+  margin-top: 4px;
+}
+
+/* 響應式微調 */
+@media (max-width: 960px) {
+  .form-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .todo-input {
+    grid-column: span 2;
+  }
+
+  .btn-add {
+    grid-column: span 2;
+    padding: 12px;
+  }
+
+  .kanban-board {
+    grid-template-columns: 1fr;
+  }
+
+  .kanban-column {
+    min-height: 220px;
+  }
+
+  .column-dropzone {
+    min-height: 140px;
+  }
+}
